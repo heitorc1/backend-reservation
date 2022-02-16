@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn prisma migrate dev",
     "start": "tsnd --respawn src/app.ts"
   },
   "dependencies": {
