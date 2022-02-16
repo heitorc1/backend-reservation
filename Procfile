@@ -1,2 +1,3 @@
-"start": "node dist/index.js",
-    "postinstall": "tsc",
+web: npm start
+
+release: yarn prisma migrate deploy
