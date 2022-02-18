@@ -3,12 +3,22 @@ import { TBooking } from "../assets/types";
 
 export class BookingService {
   async create(booking: TBooking) {
-    console.log(booking);
     try {
       const newBooking = await prismaClient.booking.create({
         data: {
           date: booking.date,
           square: booking.square,
+          user: {
+            connectOrCreate: {
+              create: {
+                email: booking.email,
+              },
+              where: { email: booking.email },
+            },
+          },
+        },
+        include: {
+          user: true,
         },
       });
       return newBooking;
@@ -22,12 +32,17 @@ export class BookingService {
       where: {
         id,
       },
+      include: {
+        user: true,
+      },
     });
     return booking;
   }
 
   async getAll() {
-    const booking = await prismaClient.booking.findMany({});
+    const booking = await prismaClient.booking.findMany({
+      include: { user: true },
+    });
     return booking;
   }
 
@@ -35,6 +50,9 @@ export class BookingService {
     const updateBooking = await prismaClient.booking.update({
       data: { square: booking.square, date: booking.date },
       where: { id },
+      include: {
+        user: true,
+      },
     });
     return updateBooking;
   }

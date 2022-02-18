@@ -14,6 +14,20 @@ model Booking {
   id        String   @id @default(uuid())
   date      DateTime
   square    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([square, date])
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String
+  booking   Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([email])
 }
