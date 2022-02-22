@@ -6,6 +6,7 @@ export const router = express.Router();
 const controller = new BookingController();
 
 router.put("/api/v1/booking", controller.upsertBooking);
-router.get("/api/v1/booking/", controller.getAllBookings);
+router.get("/api/v1/booking", controller.getAllBookings);
+router.get("/api/v1/booking/by-date", controller.getByDate);
 router.get("/api/v1/booking/:id", controller.getOneBooking);
 router.delete("/api/v1/booking/:id", controller.deleteBooking);

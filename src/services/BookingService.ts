@@ -14,6 +14,18 @@ export class BookingService {
     return booking;
   }
 
+  async getByDate(date: string) {
+    const transformedDate = new Date(
+      new Date(date).getTime() - 1000 * 3600 * 3
+    );
+    const booking = await prismaClient.booking.findUnique({
+      where: {
+        date: transformedDate,
+      },
+    });
+    return booking;
+  }
+
   async getAll() {
     const booking = await prismaClient.booking.findMany({
       include: { user: true },

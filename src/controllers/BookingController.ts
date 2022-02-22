@@ -17,6 +17,22 @@ export class BookingController {
     }
   }
 
+  async getByDate(request: Request, response: Response) {
+    const { date } = request.query;
+
+    const bookingService = new BookingService();
+
+    if (typeof date === "string") {
+      const booking = await bookingService.getByDate(date);
+
+      if (booking) {
+        return response.status(200).json(booking);
+      } else {
+        return response.status(404).json({ message: "Booking not found" });
+      }
+    }
+  }
+
   async getAllBookings(request: Request, response: Response) {
     const bookingService = new BookingService();
 
