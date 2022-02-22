@@ -13,13 +13,13 @@ datasource db {
 model Booking {
   id        String   @id @default(uuid())
   date      DateTime
-  square    String
+  square    String[]
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([square, date])
+  @@unique([date])
 }
 
 model User {

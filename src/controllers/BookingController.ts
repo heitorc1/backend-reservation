@@ -3,19 +3,6 @@ import { TBooking } from "../assets/types";
 import { BookingService } from "../services/BookingService";
 
 export class BookingController {
-  async createBooking(request: Request, response: Response) {
-    const booking: TBooking = request.body;
-
-    const bookingService = new BookingService();
-
-    try {
-      const newBooking = await bookingService.create(booking);
-      return response.status(201).json(newBooking);
-    } catch (err) {
-      return response.status(404).json({ message: err });
-    }
-  }
-
   async getOneBooking(request: Request, response: Response) {
     const id = request.params.id;
 
@@ -42,14 +29,13 @@ export class BookingController {
     }
   }
 
-  async updateBooking(request: Request, response: Response) {
+  async upsertBooking(request: Request, response: Response) {
     const booking: TBooking = request.body;
-    const id = request.params.id;
 
     const bookingService = new BookingService();
 
     try {
-      const updatedBooking = await bookingService.update(booking, id);
+      const updatedBooking = await bookingService.upsert(booking);
       return response.status(200).json(updatedBooking);
     } catch (err) {
       return response.status(404).json({ message: err });
