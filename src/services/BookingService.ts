@@ -16,7 +16,7 @@ export class BookingService {
 
   async getByDate(date: string) {
     const transformedDate = new Date(
-      new Date(date).getTime() - 1000 * 3600 * 3
+      new Date(decodeURIComponent(date)).getTime() - 1000 * 3600 * 3
     );
     const booking = await prismaClient.booking.findUnique({
       where: {
@@ -62,6 +62,8 @@ export class BookingService {
           user: {
             connectOrCreate: {
               create: {
+                name: booking.name,
+                phone: booking.phone,
                 email: booking.email,
               },
               where: { email: booking.email },
